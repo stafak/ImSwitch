@@ -15,7 +15,11 @@ class SharedAttributes(SignalInterface):
     def getHDF5Attributes(self):
         attrs = {}
         for key, value in self._data.items():
-            attrs[':'.join(key)] = value
+            if isinstance(value, dict):
+                for keysub, valuesub in value.items():
+                    attrs[':'.join(key)] = valuesub
+            else:
+                attrs[':'.join(key)] = value
 
         return attrs
 
